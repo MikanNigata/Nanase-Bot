@@ -26,14 +26,6 @@ const FILE_TYPE: string = process.argv[2] === "js" ? ".js" : ".ts";
 const IS_PRODUCTION = FILE_TYPE === ".js";
 const BASE_DIR = IS_PRODUCTION ? "./dist" : "./src";
 
-const CLIENT_INTENTS: GatewayIntentBits[] = [
-  GatewayIntentBits.Guilds,
-  GatewayIntentBits.GuildMembers,
-  GatewayIntentBits.GuildVoiceStates,
-  GatewayIntentBits.GuildMessages,
-  GatewayIntentBits.GuildMessageReactions,
-];
-
 let commands: { [key: string]: Command } = {};
 let actions: Actions = { button: {}, modal: {} };
 
@@ -43,7 +35,7 @@ actions = loadActions(BASE_DIR, FILE_TYPE);
 console.log("Registering commands...");
 
 const client = new Client({
-  intents: CLIENT_INTENTS,
+  intents: Object.values(GatewayIntentBits) as GatewayIntentBits[],
 });
 
 let reactionRoleMessage: string = "";
